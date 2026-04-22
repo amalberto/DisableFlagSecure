@@ -1,0 +1,34 @@
+plugins {                 
+    id 'java-library'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+// Resolve android.jar from the Android SDK declared in local.properties (sdk.dir)
+// or the ANDROID_HOME / ANDROID_SDK_ROOT environment variables.
+def sdkDir = null
+def localProps = rootProject.file('local.properties')
+if (localProps.exists()) {
+    def props = new Properties()
+    localProps.withInputStream { props.load(it) }
+    sdkDir = props.getProperty('sdk.dir')
+}
+if (!sdkDir) sdkDir = System.getenv('ANDROID_HOME') ?: System.getenv('ANDROID_SDK_ROOT')
+if (!sdkDir) {
+    throw new GradleException(
+        'Android SDK not found. Set sdk.dir in local.properties or ANDROID_HOME/ANDROID_SDK_ROOT.')
+}
+
+def compileSdk = (project.findProperty('xposedStubs.compileSdk') ?: '34').toString()
+def androidJar = file("${sdkDir}/platforms/android-${compileSdk}/android.jar")
+if (!androidJar.exists()) {
+    throw new GradleException(
+        "android.jar not found at ${androidJar}. Install 'Android SDK Platform ${compileSdk}' via sdkmanager.")
+}
+
+dependencies {
+    compileOnly files(androidJar)
+}

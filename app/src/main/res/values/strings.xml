@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="xposed_description">Forces FLAG_SECURE off on all windows so MediaProjection / AnyDesk / screenshots can capture them. Scope: system_server only.</string>
+</resources>

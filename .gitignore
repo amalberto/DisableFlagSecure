@@ -1,0 +1,24 @@
+# Built outputs
+build/
+app/build/
+.gradle/
+
+# IDE
+.idea/
+*.iml
+
+# Local config (contains sdk.dir specific to each machine)
+local.properties
+
+# OS
+.DS_Store
+Thumbs.db
+
+# APK artifacts / keystores
+*.apk
+*.aab
+*.jks
+*.keystore
+
+# Temporary scripts used during development / debugging
+tmp/
